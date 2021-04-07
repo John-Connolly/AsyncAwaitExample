@@ -12,7 +12,7 @@ import _Concurrency
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
-    let viewModel = TodoViewModel()
+    let viewModel = AlbumViewModel()
 
     @asyncHandler
     override func viewDidLoad() {
@@ -45,13 +45,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
-struct Todo: Codable {
-    let userId: Int
-    let id: Int
-    let title: String
-    let completed: Bool
-}
-
 struct AlbumApiResource: Codable {
     let albumId: Int
     let id: Int
@@ -66,7 +59,7 @@ struct Album {
 }
 
 
-final class TodoViewModel {
+final class AlbumViewModel {
 
     var albums: [Album] = []
 
