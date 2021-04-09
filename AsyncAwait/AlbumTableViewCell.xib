@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="89" id="KGk-i7-Jjw" customClass="AlbumTableViewCell" customModule="AsyncAwait" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="409" height="89"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="409" height="89"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qWA-E0-hCN">
+                        <rect key="frame" x="0.0" y="0.0" width="88" height="89"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="88" id="jcy-NE-twE"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pk2-2x-KTW">
+                        <rect key="frame" x="88" y="34" width="321" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="xCH-s2-Oq6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="pk2-2x-KTW" secondAttribute="trailing" id="CRU-Dg-75r"/>
+                    <constraint firstItem="qWA-E0-hCN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Hhm-9X-nja"/>
+                    <constraint firstAttribute="bottom" secondItem="qWA-E0-hCN" secondAttribute="bottom" id="MLP-Eg-kx6"/>
+                    <constraint firstItem="pk2-2x-KTW" firstAttribute="leading" secondItem="qWA-E0-hCN" secondAttribute="trailing" id="T2Z-06-1np"/>
+                    <constraint firstItem="qWA-E0-hCN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="crX-iE-Z3y"/>
+                    <constraint firstItem="pk2-2x-KTW" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oH7-pp-x48"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="imageview" destination="qWA-E0-hCN" id="JVV-EJ-e2b"/>
+                <outlet property="titleLabel" destination="pk2-2x-KTW" id="ksg-EX-rgj"/>
+            </connections>
+            <point key="canvasLocation" x="-121.0144927536232" y="155.69196428571428"/>
+        </tableViewCell>
+    </objects>
+</document>

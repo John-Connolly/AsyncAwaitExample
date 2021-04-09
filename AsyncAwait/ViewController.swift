@@ -7,42 +7,73 @@
 
 import UIKit
 import _Concurrency
+import Swift
 
 @MainActor
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
-    let viewModel = AlbumViewModel()
+    @IBOutlet weak var searchbar: UISearchBar!
+    var viewModel = AlbumViewModel()
 
     @asyncHandler
     override func viewDidLoad() {
         super.viewDidLoad()
         tableview.delegate = self
         tableview.dataSource = self
+        tableview.register(UINib(nibName: "AlbumTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+
+        observeSearchBarText()
 
         do {
             try await viewModel.loadAlbums()
             tableview.reloadData()
         } catch {
-
+            print(error)
         }
     }
 
 
+    @asyncHandler
+    func observeSearchBarText() {
+        let textStream = searchbar.searchTextField.textSequence()
+            .map(\.object)
+            .map { $0 as! UITextField }
+            .map(\.text)
+
+        for await text in textStream {
+            viewModel.search(with: text ?? "")
+            tableview.reloadData()
+        }
+
+
+    }
+
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.albums.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = viewModel.albums[indexPath.row].title
+        let cell = tableview.dequeueReusableCell(withIdentifier: "cell") as! AlbumTableViewCell
+        cell.titleLabel.text = viewModel.albums[indexPath.row].title
+        cell.imageview.image = viewModel.albums[indexPath.row].image
         return cell
     }
+}
 
+extension UITextField {
 
+    func textSequence() -> NotificationCenter.Notifications  {
+        return NotificationCenter.default.notifications(of: UITextField.textDidChangeNotification, on: self)
+
+    }
 }
 
 struct AlbumApiResource: Codable {
@@ -61,14 +92,28 @@ struct Album {
 
 final class AlbumViewModel {
 
-    var albums: [Album] = []
+    enum Search {
+        case searching(String)
+        case notSearching
+    }
 
+    var search = Search.notSearching
+    private var _albums: [Album] = []
+
+    var albums: [Album] {
+        switch search {
+        case let .searching(text):
+            return _albums.filter { $0.title.starts(with: text.lowercased()) }
+        case .notSearching:
+            return _albums
+        }
+    }
 
     func loadAlbums() async throws {
         let url = URL(string: "https://jsonplaceholder.typicode.com/photos")!
         let data = try await request(url: url)
         let albums = try JSONDecoder().decode([AlbumApiResource].self, from: data).prefix(30)
-        self.albums = try await loadImagesOnebyOne(from: Array(albums))
+        self._albums = try await loadImagesOnebyOne(from: Array(albums))
     }
 
 
@@ -96,56 +141,25 @@ final class AlbumViewModel {
         return albums
     }
 
-
-//    func loadImages(from albums: [AlbumApiResource]) async throws -> [Album] {
-//
-//        var albums: [Album] = []
-//        try await withTaskGroup(of: Album.self) { group in
-//
-//            for apiResource in albums {
-//                group.spawn {
-//                    let data = try await makeApiRequest(url: album.thumbnailUrl)
-//                    let image = UIImage(data: data)
-//                    return Album(title: apiResource.title, image: image)
-//                }
-//            }
-//
-//            for await album in group {
-//                albums.append(album)
-//            }
-//
-//        }
-//        return albums
-//
-//    }
-
-}
-
-
-extension AsyncSequence {
-    func collect() async throws -> [Element] {
-        var buffer = [Element]()
-        for try await element in self {
-            buffer.append(element)
-        }
-        return buffer
+    func search(with text: String) {
+        search = text != "" ? .searching(text) : .notSearching
     }
 }
 
 struct NetworkError: Error { }
 
 func request(url: URL) async throws -> Data {
-  return try await withUnsafeThrowingContinuation { (continuation) in
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
-      switch (data, error) {
-      case let (_, error?):
-        return continuation.resume(throwing: error)
-      case let (data?, _):
-        return continuation.resume(returning: data)
-      case (nil, nil):
-        return continuation.resume(throwing: NetworkError())
-      }
+    return try await withUnsafeThrowingContinuation { (continuation) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            switch (data, error) {
+            case let (_, error?):
+                return continuation.resume(throwing: error)
+            case let (data?, _):
+                return continuation.resume(returning: data)
+            case (nil, nil):
+                return continuation.resume(throwing: NetworkError())
+            }
+        }
+        .resume()
     }
-    .resume()
-  }
 }

@@ -15,6 +15,10 @@
 		0A652D1E261D418000750348 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A652D1C261D418000750348 /* LaunchScreen.storyboard */; };
 		0A652D29261D418000750348 /* AsyncAwaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A652D28261D418000750348 /* AsyncAwaitTests.swift */; };
 		0A652D34261D418000750348 /* AsyncAwaitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A652D33261D418000750348 /* AsyncAwaitUITests.swift */; };
+		0AF39C8A261F97B300DD0BF2 /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF39C88261F97B300DD0BF2 /* AlbumTableViewCell.swift */; };
+		0AF39C8B261F97B300DD0BF2 /* AlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF39C89261F97B300DD0BF2 /* AlbumTableViewCell.xib */; };
+		0AF39C93261F9C1400DD0BF2 /* YieldingContinuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF39C92261F9C1400DD0BF2 /* YieldingContinuation.swift */; };
+		0AF39C9F261F9CB600DD0BF2 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF39C9E261F9CB600DD0BF2 /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		0A652D2F261D418000750348 /* AsyncAwaitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsyncAwaitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A652D33261D418000750348 /* AsyncAwaitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAwaitUITests.swift; sourceTree = "<group>"; };
 		0A652D35261D418000750348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AF39C88261F97B300DD0BF2 /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
+		0AF39C89261F97B300DD0BF2 /* AlbumTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumTableViewCell.xib; sourceTree = "<group>"; };
+		0AF39C92261F9C1400DD0BF2 /* YieldingContinuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YieldingContinuation.swift; sourceTree = "<group>"; };
+		0AF39C9E261F9CB600DD0BF2 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +109,10 @@
 			children = (
 				0A652D11261D417E00750348 /* AppDelegate.swift */,
 				0A652D13261D417E00750348 /* SceneDelegate.swift */,
+				0AF39C9D261F9C9700DD0BF2 /* async-support */,
 				0A652D15261D417E00750348 /* ViewController.swift */,
+				0AF39C88261F97B300DD0BF2 /* AlbumTableViewCell.swift */,
+				0AF39C89261F97B300DD0BF2 /* AlbumTableViewCell.xib */,
 				0A652D17261D417E00750348 /* Main.storyboard */,
 				0A652D1A261D418000750348 /* Assets.xcassets */,
 				0A652D1C261D418000750348 /* LaunchScreen.storyboard */,
@@ -126,6 +137,15 @@
 				0A652D35261D418000750348 /* Info.plist */,
 			);
 			path = AsyncAwaitUITests;
+			sourceTree = "<group>";
+		};
+		0AF39C9D261F9C9700DD0BF2 /* async-support */ = {
+			isa = PBXGroup;
+			children = (
+				0AF39C92261F9C1400DD0BF2 /* YieldingContinuation.swift */,
+				0AF39C9E261F9CB600DD0BF2 /* Notifications.swift */,
+			);
+			path = "async-support";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +254,7 @@
 				0A652D1E261D418000750348 /* LaunchScreen.storyboard in Resources */,
 				0A652D1B261D418000750348 /* Assets.xcassets in Resources */,
 				0A652D19261D417E00750348 /* Main.storyboard in Resources */,
+				0AF39C8B261F97B300DD0BF2 /* AlbumTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +279,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AF39C9F261F9CB600DD0BF2 /* Notifications.swift in Sources */,
 				0A652D16261D417E00750348 /* ViewController.swift in Sources */,
 				0A652D12261D417E00750348 /* AppDelegate.swift in Sources */,
 				0A652D14261D417E00750348 /* SceneDelegate.swift in Sources */,
+				0AF39C93261F9C1400DD0BF2 /* YieldingContinuation.swift in Sources */,
+				0AF39C8A261F97B300DD0BF2 /* AlbumTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +394,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-Xfrontend -enable-experimental-concurrency";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -enable-experimental-concurrency -parse-stdlib";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
